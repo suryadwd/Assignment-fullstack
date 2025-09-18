@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://assignment-fullstack-ns9n.vercel.app", "https://assignment-fullstack-ucke.vercel.app"],
+  origin: ["http://localhost:5173", "https://assignment-fullstack-ns9n.vercel.app", "https://assignment-fullstack-ucke.vercel.app","https://assignment.devsurya.space/"],
   credentials: true,
 }));
 
