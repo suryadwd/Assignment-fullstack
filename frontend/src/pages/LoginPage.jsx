@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect } from 'react';
 import { login } from '../Redux/authSlice'
 import  ContractsDashboard  from './ContractsDashboard'
+import axios from 'axios';
 
 const Login = () => {
 
@@ -14,7 +15,15 @@ const Login = () => {
 
   const { token, error } = useSelector((state) => state.auth)
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post({https://assignment-fullstack-3.onrender.com/auth/login}, {
+        username, password
+      }, { withCredentials: true });
+      
+    } catch (error) {
+      
+    }
     dispatch(login({ username, password }))
   }
 
