@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { logout } from "../Redux/authSlice";
 
 const Topbar = () => {
@@ -8,9 +9,18 @@ const Topbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(logout());      
-    navigate("/login");      
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://assignment-fullstack-5.onrender.com/auth/logout",
+        {},
+        { withCredentials: true }
+      );
+      dispatch(logout());
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   return (
