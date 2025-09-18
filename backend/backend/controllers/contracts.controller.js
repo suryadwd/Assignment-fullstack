@@ -1,6 +1,6 @@
 // controllers/contracts.controller.js
 import { poolPromise } from '../Database/db.js';
-        
+
 // List all documents (already done)
 export const getContracts = async (req, res) => {
   try {

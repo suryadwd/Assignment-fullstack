@@ -34,7 +34,7 @@ export const signup = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
 
-  const client = await poolPromise.connect();
+  const client = await pool.connect();
   try {
    
     const existing = await client.query(
@@ -80,7 +80,7 @@ export const login = async (req, res) => {
     return res.status(400).json({ error: 'Missing fields' });
 
   try {
-    const result = await poolPromise.query(
+    const result = await pool.query(
       'SELECT * FROM users WHERE username=$1',
       [username]
     );
@@ -119,7 +119,7 @@ export const profile = async (req, res) => {
     const userId = req.user.user_id;
     console.log('req.user:', req.user);
 
-    const result = await poolPromise.query(
+    const result = await pool.query(
       'SELECT user_id, username, created_at FROM users WHERE user_id=$1',
       [userId]
     );
