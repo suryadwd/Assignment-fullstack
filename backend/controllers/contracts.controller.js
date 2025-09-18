@@ -1,5 +1,5 @@
 // controllers/contracts.controller.js
-import { poolPromise } from '../Database/db.js';
+import { pool } from '../Database/db.js';
         
 // List all documents (already done)
 export const getContracts = async (req, res) => {
@@ -11,7 +11,7 @@ export const getContracts = async (req, res) => {
       WHERE user_id = $1
       ORDER BY uploaded_on DESC
     `;
-    const { rows } = await poolPromise.query(query, [userId]);
+    const { rows } = await pool.query(query, [userId]);
     res.status(200).json({ documents: rows });
   } catch (err) {
     console.error('Error fetching documents:', err);
@@ -31,7 +31,7 @@ export const getContractDetails = async (req, res) => {
       FROM documents
       WHERE doc_id = $1 AND user_id = $2
     `;
-    const docResult = await poolPromise.query(docQuery, [docId, userId]);
+    const docResult = await pool.query(docQuery, [docId, userId]);
 
     if (docResult.rowCount === 0) {
       return res.status(404).json({ error: 'Document not found' });
@@ -46,7 +46,7 @@ export const getContractDetails = async (req, res) => {
       WHERE doc_id = $1
       ORDER BY created_at ASC
     `;
-    const chunksResult = await poolPromise.query(chunksQuery, [docId]);
+    const chunksResult = await pool.query(chunksQuery, [docId]);
 
     document.chunks = chunksResult.rows;
 

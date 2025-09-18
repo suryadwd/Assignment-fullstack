@@ -1,4 +1,4 @@
-import { poolPromise } from '../Database/db.js';
+import { pool } from '../Database/db.js';
 import { v4 as uuidv4 } from 'uuid';
 import textract from 'textract';
 
@@ -35,7 +35,7 @@ export const uploadContract = async (req, res) => {
       chunks.push(words.slice(i, i + chunkSize).join(' '));
     }
 
-    const client = await poolPromise.connect();
+    const client = await pool.connect();
     try {
       await client.query('BEGIN');
 
