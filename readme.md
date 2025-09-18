@@ -27,6 +27,11 @@ A full-stack MERN contract dashboard project with authentication, contract manag
 ### Contract Details & AI Insights
 ![Contract Details](frontend/public/insight.png)
 
+### Database View
+![Database View](frontend/public/a.png)
+![Database](frontend/public/aa.png)
+![Database](frontend/public/aaa.png)
+
 > _Screenshots above show the main UI flows: landing, signup, login, dashboard, and contract details with AI insights._
 
 ---
