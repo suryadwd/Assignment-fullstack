@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { pool } from '../Database/db.js';
+import { poolPromise } from '../Database/db.js';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -20,12 +20,12 @@ export const test = (req, res) => {
 
 export const ConnectDB = async (req, res) => {
   try {
-    const pool = await poolPromise;
-    const result = await pool.query("SELECT NOW()");
+    const pool = await poolPromise;  // wait for the pool to be ready
+    const result = await pool.query('SELECT NOW()');
     res.json({ dbTime: result.rows[0].now });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: "DB connection failed" });
+    res.status(500).json({ error: 'DB connection failed' });
   }
 };
 
