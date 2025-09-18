@@ -10,6 +10,26 @@ A full-stack MERN contract dashboard project with authentication, contract manag
 - **Backend API:** [https://assignment-fullstack-5.onrender.com/](https://assignment-fullstack-5.onrender.com/)
 
 ---
+## Screenshots
+
+### Landing Page
+![public/landing.png](frontend/public/landing.png)
+
+### Signup Page
+![Signup Page](frontend/public/signup.png)
+
+### Login Page
+![Login Page](frontend/public/login.png)
+
+### Dashboard
+![Dashboard](frontend/public/dashboard.png)
+
+### Contract Details & AI Insights
+![Contract Details](frontend/public/insight.png)
+
+> _Screenshots above show the main UI flows: landing, signup, login, dashboard, and contract details with AI insights._
+
+---
 
 ## Features
 

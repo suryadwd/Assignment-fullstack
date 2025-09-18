@@ -17,7 +17,7 @@ app.use(cors({
     "http://localhost:5173",
     "https://assignment-fullstack-ns9n.vercel.app",
     "https://assignment-fullstack-ucke.vercel.app",
-    "https://assignment.devsurya.space" // no trailing slash
+    "https://assignment.devsurya.space" 
   ],
   credentials: true,
 }));
