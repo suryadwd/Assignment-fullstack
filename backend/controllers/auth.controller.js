@@ -8,15 +8,27 @@ export const test = (req, res) => {
   res.send('🚀 Server is running with Postgres + Express');
 }
 
-export const ConnectDB= async (req, res) => {
+// export const ConnectDB= async (req, res) => {
+//   try {
+//     const result = await pool.query('SELECT NOW()');
+//     res.json({ dbTime: result.rows[0].now });
+//   } catch (e) {
+//     console.error(e);
+//     res.status(500).json({ error: 'DB connection failed' });
+//   }
+// }
+
+export const ConnectDB = async (req, res) => {
   try {
-    const result = await pool.query('SELECT NOW()');
+    const pool = await poolPromise;
+    const result = await pool.query("SELECT NOW()");
     res.json({ dbTime: result.rows[0].now });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: 'DB connection failed' });
+    res.status(500).json({ error: "DB connection failed" });
   }
-}
+};
+
 
 export const signup = async (req, res) => {
   const { username, password } = req.body;
