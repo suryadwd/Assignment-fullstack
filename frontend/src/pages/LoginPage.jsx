@@ -29,6 +29,7 @@ const Login = () => {
           token: response.data.token, 
           user: username
         }));
+         document.cookie = `token=${token}; path=/; max-age=${7*24*60*60}`;
       } else {
         dispatch(loginFailure(response.data.error || 'Login failed'));
       }

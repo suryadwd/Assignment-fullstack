@@ -26,6 +26,7 @@ const Signup = () => {
           token: response.data.token,  // make sure backend sends this
           user: username
         }));
+        document.cookie = `token=${token}; path=/; max-age=${7*24*60*60}`;
         toast.success('Signup Successful ✅');
         navigate('/contractsDashboard');
       } else {

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,13 +9,24 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
+// helper to get cookie by name
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+  return null;
+};
+
 const UploadsPage = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const token = useSelector((state) => state.auth.token); // ✅ get token from Redux
-  console.log("🔑 Current token:", token);
-
   const handleFiles = async (event) => {
     const files = Array.from(event.target.files);
+
+    const token = getCookie("token"); // get token from cookie
+    if (!token) {
+      alert("You are not logged in!");
+      return;
+    }
 
     for (let file of files) {
       const formData = new FormData();
@@ -28,11 +37,10 @@ const UploadsPage = () => {
           "https://assignment-fullstack-5.onrender.com/upload",
           formData,
           {
-            headers: {
+            headers: { 
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`, // ✅ pass token here
+              Authorization: `Bearer ${token}` // send token in header
             },
-            withCredentials: true, // still fine if cookie is used
           }
         );
 
@@ -64,7 +72,6 @@ const UploadsPage = () => {
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-4">Uploaded Files</h1>
 
-      {/* Upload dialog */}
       <Dialog>
         <DialogTrigger asChild>
           <Button>Upload</Button>
@@ -89,13 +96,9 @@ const UploadsPage = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Uploaded list */}
       <div className="mt-6 grid grid-cols-3 gap-4">
         {uploadedFiles.map((f, idx) => (
-          <div
-            key={idx}
-            className="border rounded p-2 flex flex-col items-center"
-          >
+          <div key={idx} className="border rounded p-2 flex flex-col items-center">
             {f.file.type.startsWith("image/") && (
               <img
                 src={f.preview}
@@ -104,11 +107,7 @@ const UploadsPage = () => {
               />
             )}
             <p className="mt-2 text-sm font-medium">{f.file.name}</p>
-            <span
-              className={
-                f.status.includes("✅") ? "text-green-500" : "text-red-500"
-              }
-            >
+            <span className={f.status.includes("✅") ? "text-green-500" : "text-red-500"}>
               {f.status}
             </span>
             {f.docId && (
