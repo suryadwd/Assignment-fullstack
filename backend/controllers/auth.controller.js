@@ -127,7 +127,7 @@ export const profile = async (req, res) => {
     if (result.rows.length === 0)
       return res.status(404).json({ error: 'User not found' });
 
-    return res.status(200).json({ profile: result.rows[0] });
+    return res.status(200).json({ profile: result.rows[0], success: true });
   } catch (e) {
     console.error('Profile fetch error:', e);
     res.status(500).json({ error: 'Failed to fetch profile' });
