@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect } from 'react';
-import { login } from '../Redux/authSlice'
+import { loginSuccess, loginFailure } from '../Redux/authSlice'
 import  ContractsDashboard  from './ContractsDashboard'
 import axios from 'axios';
 
@@ -15,30 +15,40 @@ const Login = () => {
 
   const { token, error } = useSelector((state) => state.auth)
 
-  const handleLogin = async () => {
+   const handleLogin = async () => {
     try {
-      const response = await axios.post({https://assignment-fullstack-5.onrender.com/auth/login}, {
-        username, password
-      }, { withCredentials: true });
+      const response = await axios.post(
+        'https://assignment-fullstack-5.onrender.com/auth/login',
+        { username, password },
+        { withCredentials: true }
+      );
+
       
-    } catch (error) {
-      
+      if (response.data.success) {
+        dispatch(loginSuccess({
+          token: response.data.token, 
+          user: username
+        }));
+      } else {
+        dispatch(loginFailure(response.data.error || 'Login failed'));
+      }
+    } catch (err) {
+      dispatch(loginFailure(err.response?.data?.error || 'Login request failed'));
     }
-    dispatch(login({ username, password }))
-  }
+  };
 
   useEffect(() => {
     if (token) {
-      toast.success('Login Successfully ✅')
-      navigate('/contractsDashboard')
+      toast.success('Login Successfully ✅');
+      navigate('/contractsDashboard');
     }
-  }, [token, navigate])
+  }, [token, navigate]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (error) {
-      toast.error(error)
+      toast.error(error);
     }
-  }, [error])
+  }, [error]);
 
  return (
     <div className='flex justify-center items-center h-screen bg-gradient-to-b from-blue-300 to-blue-600'>
@@ -73,7 +83,7 @@ const Login = () => {
       </div>
       <p className='text-gray-300 mt-4 cursor-pointer'>Forget Password</p>
       <div className="mt-4">
-        <p className="text-gray-300">Don't have an account? &nbsp;<span className="text-blue-200 cursor-pointer font-bold">Sign Up</span></p>
+        <p className="text-gray-300">Don't have an account? &nbsp;<span className="text-blue-200 cursor-pointer font-bold"><Link to="/signup">Signup</Link></span></p>
       </div>
       
       </div>

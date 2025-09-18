@@ -64,7 +64,7 @@ export const signup = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     
-    return res.status(201).json({ success: true, message: 'Signup successful' });
+    return res.status(201).json({ success: true, message: 'Signup successful' ,token:token});
   } catch (e) {
     console.error('Signup error:', e);
     res.status(500).json({ error: 'Signup failed' });

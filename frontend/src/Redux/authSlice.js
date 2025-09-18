@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -8,23 +8,23 @@ const authSlice = createSlice({
     error: null
   },
   reducers: {
-    login: (state, action) => {
-      const { username, password } = action.payload
-      if (password === 'test123') {
-        state.user = username || 'Guest'
-        state.token = 'mock-jwt-token-123456' 
-        state.error = null
-      } else {
-        state.error = 'Invalid password'
-      }
+    loginSuccess: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.error = null;
+    },
+    loginFailure: (state, action) => {
+      state.user = null;
+      state.token = null;
+      state.error = action.payload;
     },
     logout: (state) => {
-      state.user = null
-      state.token = null
-      state.error = null
+      state.user = null;
+      state.token = null;
+      state.error = null;
     }
   }
-})
+});
 
-export const { login, logout } = authSlice.actions
-export default authSlice.reducer
+export const { loginSuccess, loginFailure, logout } = authSlice.actions;
+export default authSlice.reducer;
