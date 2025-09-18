@@ -15,7 +15,12 @@ app.use(cookieParser());
 app.use(cors({
   origin: ["http://localhost:5173", "https://assignment-fullstack-ns9n.vercel.app"],
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
+
+
+
 
 app.get('/', (req, res) => {
   res.send('API is running...');

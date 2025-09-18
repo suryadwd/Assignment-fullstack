@@ -13,7 +13,9 @@ import {
 
 const UploadsPage = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const token = useSelector((state) => state.auth.token);
+  const token = useSelector((state) => state.auth.token); // ✅ get token from Redux
+  console.log("🔑 Current token:", token);
+
   const handleFiles = async (event) => {
     const files = Array.from(event.target.files);
 
@@ -23,11 +25,14 @@ const UploadsPage = () => {
 
       try {
         const res = await axios.post(
-          "https://assignment-fullstack-5.onrender.com/upload", 
+          "https://assignment-fullstack-5.onrender.com/upload",
           formData,
           {
-            headers: { "Content-Type": "multipart/form-data" },
-            withCredentials: true, 
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`, // ✅ pass token here
+            },
+            withCredentials: true, // still fine if cookie is used
           }
         );
 
